@@ -1,3 +1,9 @@
+import { GlobalStyle } from './styles/global'
 export function App() {
-  return <>ola</>
+  return (
+    <>
+      <GlobalStyle />
+      <h1> teste</h1>
+    </>
+  )
 }
