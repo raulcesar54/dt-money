@@ -6,6 +6,20 @@ import { useContext } from 'react'
 import { TransactionsContext } from '../../transactions.context'
 export function Sumary() {
   const { transactions } = useContext(TransactionsContext)
+  const sumary = transactions.reduce(
+    (acc, transaction) => {
+      if (transaction.type == 'deposit') {
+        acc.deposits += transaction.amount
+        acc.total += transaction.amount
+      } else {
+        acc.whitdraws += transaction.amount
+        acc.total -= transaction.amount
+      }
+
+      return acc
+    },
+    { deposits: 0, whitdraws: 0, total: 0 }
+  )
   return (
     <Container>
       <div>
@@ -13,21 +27,37 @@ export function Sumary() {
           <p>Entradas</p>
           <img src={incomming} alt='entradas' />
         </header>
-        <strong>R$ 1000,00</strong>
+        <strong>
+          {new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+          }).format(sumary.deposits)}
+        </strong>
       </div>
       <div>
         <header>
           <p>Saidas</p>
           <img src={outcomming} alt='saidas' />
         </header>
-        <strong>R$ 500,00</strong>
+        <strong>
+          -
+          {new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+          }).format(sumary.whitdraws)}
+        </strong>
       </div>
       <div className='higthlight-background'>
         <header>
           <p>Total</p>
           <img src={total} alt='total' />
         </header>
-        <strong>R$ 500,00</strong>
+        <strong>
+          {new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+          }).format(sumary.total)}
+        </strong>
       </div>
     </Container>
   )
