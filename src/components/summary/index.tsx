@@ -2,7 +2,10 @@ import { Container } from './style'
 import incomming from '../../assets/income.svg'
 import outcomming from '../../assets/outcome.svg'
 import total from '../../assets/total.svg'
+import { useContext } from 'react'
+import { TransactionsContext } from '../../transactions.context'
 export function Sumary() {
+  const { transactions } = useContext(TransactionsContext)
   return (
     <Container>
       <div>

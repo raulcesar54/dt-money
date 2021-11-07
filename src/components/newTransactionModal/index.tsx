@@ -1,10 +1,10 @@
+import { FormEvent, useContext, useState } from 'react'
 import Modal from 'react-modal'
-import { Container, RadioBox, TransactionTypeContainer } from './style'
 import closeIcon from '../../assets/close.svg'
 import incomming from '../../assets/income.svg'
 import outcomming from '../../assets/outcome.svg'
-import { FormEvent, useState } from 'react'
-import { api } from '../../services/api'
+import { TransactionsContext } from '../../transactions.context'
+import { Container, RadioBox, TransactionTypeContainer } from './style'
 
 interface NewTransactionProps {
   isOpen: boolean
@@ -15,19 +15,26 @@ export function NewTransactionModal({
   isOpen,
   onRequestClose,
 }: NewTransactionProps) {
+  const { createTransaction } = useContext(TransactionsContext)
+
   const [typeTransaction, setTypeTransaction] = useState('deposit')
   const [title, setTitle] = useState('')
-  const [value, setValue] = useState(0)
+  const [amount, setAmount] = useState(0)
   const [category, setCategory] = useState('')
-  function handleCreateNewTransaction(event: FormEvent) {
+
+  async function handleCreateNewTransaction(event: FormEvent) {
     event.preventDefault()
-    const data = {
+    await createTransaction({
       title,
-      value,
+      amount,
       category,
       type: typeTransaction,
-    }
-    api.post('/transactions', data)
+    })
+    onRequestClose()
+    setTitle('')
+    setAmount(0)
+    setCategory('')
+    setTypeTransaction('deposit')
   }
 
   return (
@@ -48,8 +55,8 @@ export function NewTransactionModal({
           placeholder='Título'
         />
         <input
-          value={value}
-          onChange={(event) => setValue(Number(event.target.value))}
+          value={amount}
+          onChange={(event) => setAmount(Number(event.target.value))}
           placeholder='Valor'
           type='number'
         />
@@ -64,10 +71,10 @@ export function NewTransactionModal({
             <span>entrada</span>
           </RadioBox>
           <RadioBox
-            isActive={typeTransaction === 'whitdraw'}
-            activeColor='whitdraw'
+            isActive={typeTransaction === 'withdraw'}
+            activeColor='withdraw'
             type='button'
-            onClick={() => setTypeTransaction('whitdraw')}
+            onClick={() => setTypeTransaction('withdraw')}
           >
             <img src={outcomming} alt='Saida' />
             <span>saida</span>

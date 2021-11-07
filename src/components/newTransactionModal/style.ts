@@ -62,11 +62,11 @@ export const TransactionTypeContainer = styled.div`
 `
 interface RadioBoxProps {
   isActive: boolean
-  activeColor: 'deposit' | 'whitdraw'
+  activeColor: 'deposit' | 'withdraw'
 }
 const colors = {
   deposit: '#33cc95',
-  whitdraw: '#e52e4d',
+  withdraw: '#e52e4d',
 }
 export const RadioBox = styled.button<RadioBoxProps>`
   height: 4rem;
