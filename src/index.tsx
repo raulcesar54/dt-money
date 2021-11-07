@@ -22,7 +22,7 @@ createServer({
           title: 'Alugel casa ',
           type: 'withdraw',
           category: 'Casa',
-          amount: 400,
+          amount: -400,
           createAt: new Date('2021-02-12'),
         },
       ],

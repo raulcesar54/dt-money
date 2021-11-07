@@ -5,7 +5,7 @@ interface TransactionProps {
   id: number
   title: string
   type: string
-  amount: string
+  amount: number
   category: string
   createdAt: Date
 }
@@ -36,9 +36,19 @@ export function Transaction() {
             return (
               <tr key={transactions.id}>
                 <td>{transactions.title}</td>
-                <td className={transactions.type}>{transactions.amount}</td>
+                <td className={transactions.type}>
+                  {new Intl.NumberFormat('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL',
+                  }).format(transactions.amount)}
+                </td>
                 <td>{transactions.category}</td>
-                <td>{transactions.createdAt}</td>
+                <td>
+                  {' '}
+                  {new Intl.DateTimeFormat('pt-BR').format(
+                    transactions.createdAt
+                  )}
+                </td>
               </tr>
             )
           })}
