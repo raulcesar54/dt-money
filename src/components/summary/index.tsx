@@ -1,11 +1,11 @@
-import { Container } from './style'
 import incomming from '../../assets/income.svg'
 import outcomming from '../../assets/outcome.svg'
 import total from '../../assets/total.svg'
-import { useContext } from 'react'
-import { TransactionsContext } from '../../transactions.context'
+import { useTransactions } from '../../hooks/useTransactios'
+import { Container } from './style'
+
 export function Sumary() {
-  const { transactions } = useContext(TransactionsContext)
+  const { transactions } = useTransactions()
   const sumary = transactions.reduce(
     (acc, transaction) => {
       if (transaction.type == 'deposit') {
